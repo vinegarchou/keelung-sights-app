@@ -1,5 +1,5 @@
 /* ====================================================
-   基隆景點瀏覽器 - 深色調 Dark Mode Style (純文字標題與副標題垂直置中)
+   基隆景點瀏覽器 - 深色調 Dark Mode Style (顯眼彈窗關閉鈕)
 ==================================================== */
 
 :root {
@@ -35,7 +35,7 @@ main {
     flex: 1;
 }
 
-/* Header Navbar Style - 純文字主標題與副標題垂直置中 */
+/* Header Navbar Style */
 .site-header {
     background: #1e293b;
     border-bottom: 1px solid var(--border-color);
@@ -59,7 +59,6 @@ main {
     line-height: 1.2;
 }
 
-/* 「Keelung Tourism Explorer」景點副標題 (位於主標題下方) */
 .brand-subtitle {
     font-size: 1.05rem;
     color: var(--text-muted);
@@ -236,7 +235,9 @@ main {
     color: #ffffff;
 }
 
-/* macOS 風格暗色彈窗 */
+/* ====================================================
+   macOS 風格暗色彈窗 (高對比關閉按鈕)
+==================================================== */
 .modal-backdrop {
     background-color: rgba(2, 6, 23, 0.75);
     backdrop-filter: blur(12px);
@@ -244,9 +245,9 @@ main {
 }
 
 .mac-modal-content {
-    background: rgba(30, 41, 59, 0.95);
+    background: rgba(30, 41, 59, 0.96);
     backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     color: #f8fafc;
 }
 
@@ -261,15 +262,28 @@ main {
     opacity: 1;
 }
 
+/* 顯眼清晰的關閉按鈕 */
 .modal-btn-close {
     position: absolute;
     top: 16px;
     right: 16px;
-    z-index: 10;
-    background-color: rgba(51, 65, 85, 0.8);
-    filter: invert(1) grayscale(100%) brightness(200%);
+    z-index: 20;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    padding: 6px;
+    background-color: #334155;
+    border: 1px solid #475569;
+    color: #ffffff !important;
+    font-size: 1.1rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.modal-btn-close:hover {
+    background-color: #ef4444;
+    border-color: #dc2626;
+    color: #ffffff !important;
+    transform: scale(1.1);
 }
 
 .modal-img-wrapper {
