@@ -1,0 +1,336 @@
+/* ====================================================
+   基隆景點瀏覽器 - 深色調 Dark Mode Style (純文字標題與副標題垂直置中)
+==================================================== */
+
+:root {
+    --bg-main: #0f172a;
+    --card-bg: #1e293b;
+    --card-inner: #0f172a;
+    --primary-color: #38bdf8;
+    --primary-hover: #0284c7;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --card-radius: 14px;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+    --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+html {
+    font-size: 17px;
+}
+
+body {
+    font-family: 'Noto Sans TC', 'Outfit', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+main {
+    flex: 1;
+}
+
+/* Header Navbar Style - 純文字主標題與副標題垂直置中 */
+.site-header {
+    background: #1e293b;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.brand-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* 「基隆景點導覽」顯眼大字體 */
+.brand-title {
+    font-size: 2.3rem;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+/* 「Keelung Tourism Explorer」景點副標題 (位於主標題下方) */
+.brand-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 6px;
+    letter-spacing: 0.02em;
+}
+
+/* District Filter Buttons */
+.district-section {
+    background: #1e293b;
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.section-heading {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+.btn-district {
+    background: #0f172a;
+    border: 1.5px solid var(--border-color);
+    color: #cbd5e1;
+    font-weight: 500;
+    font-size: 1.02rem;
+    border-radius: 25px;
+    padding: 8px 20px;
+    transition: all 0.25s ease;
+}
+
+.btn-district:hover {
+    background: #334155;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.btn-district.active {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
+}
+
+.district-badge {
+    background: #0284c7;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 6px 18px;
+    border-radius: 25px;
+}
+
+.hot-sights-label {
+    color: #ffffff !important;
+}
+
+.sights-count-badge {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+    font-weight: 500;
+}
+
+/* Sight Cards */
+.sight-card {
+    background: var(--card-bg);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.sight-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: #475569;
+}
+
+.thumb-img {
+    width: 92px;
+    height: 92px;
+    min-width: 92px;
+    object-fit: cover;
+    border-radius: 10px;
+    background-color: #0f172a;
+    border: 1px solid var(--border-color);
+}
+
+.sight-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f8fafc;
+    line-height: 1.35;
+    white-space: normal !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.sight-address {
+    color: #ffffff !important;
+    font-size: 0.96rem;
+    font-weight: 500;
+}
+
+.sight-address i {
+    color: #38bdf8;
+}
+
+.category-pill {
+    background: #0f172a;
+    color: #38bdf8;
+    border: 1px solid #1e3a8a;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: 15px;
+}
+
+.zone-pill {
+    background: #334155;
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: 15px;
+}
+
+/* Google Maps 按鈕 */
+.btn-gmaps {
+    background: #0f172a;
+    color: #e2e8f0;
+    border: 1px solid #475569;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.btn-gmaps:hover {
+    background: #334155;
+    color: #ffffff;
+    border-color: #38bdf8;
+}
+
+.btn-gmaps i {
+    color: #38bdf8;
+    font-size: 0.85rem;
+}
+
+/* 詳細介紹 按鈕 */
+.btn-toggle-details {
+    background: #0f172a;
+    border: 1px solid var(--border-color);
+    color: #38bdf8;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.btn-toggle-details:hover {
+    background: #334155;
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+/* macOS 風格暗色彈窗 */
+.modal-backdrop {
+    background-color: rgba(2, 6, 23, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.mac-modal-content {
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #f8fafc;
+}
+
+.mac-modal .modal-dialog {
+    transform: scale(0.82) translateY(15px);
+    opacity: 0;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease-out;
+}
+
+.mac-modal.show .modal-dialog {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.modal-btn-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    background-color: rgba(51, 65, 85, 0.8);
+    filter: invert(1) grayscale(100%) brightness(200%);
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.modal-img-wrapper {
+    width: 100%;
+    max-height: 400px;
+    background-color: #0f172a;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+}
+
+.modal-sight-img-contain {
+    max-height: 380px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.modal-sight-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f8fafc;
+    word-break: break-word;
+}
+
+.modal-sight-address {
+    font-size: 1.02rem;
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+.modal-sight-address i {
+    color: #38bdf8;
+}
+
+.modal-desc-box {
+    background: #0f172a;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 18px;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #cbd5e1;
+}
+
+.modal-gmaps-link {
+    font-size: 0.9rem;
+    padding: 6px 14px;
+}
+
+/* Footer */
+.site-footer {
+    background: #1e293b;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.98rem;
+}
