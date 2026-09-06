@@ -64,12 +64,12 @@ def health_check():
 @app.get(
     "/sights",
     response_model=List[Sight],
-    summary="從 MongoDB 取得特定行政區景點資料",
-    description="傳入行政區名稱 query parameter (zone)，例如 '七堵' 或 '七堵區'，回傳 MongoDB 中對應的景點 Sight 物件清單。",
+    summary="從 MongoDB 取得特定行政區或全部景點資料",
+    description="傳入行政區名稱 query parameter (zone)，例如 'ALL'、'七堵' 或 '七堵區'，回傳 MongoDB 中對應的景點 Sight 物件清單。",
     tags=["Sights"]
 )
 def get_sights_by_zone(
-    zone: str = Query("七堵區", description="行政區名稱 (例如：七堵 或 七堵區)")
+    zone: str = Query("ALL", description="行政區名稱 (例如：ALL, 七堵區, 中正區)")
 ):
     """
     HTTP Controller / Router：
@@ -104,5 +104,5 @@ def read_root():
     return JSONResponse({
         "message": "Keelung Sights API (MongoDB Atlas Version) is running",
         "docs": "/docs",
-        "example": "/sights?zone=七堵區"
+        "example": "/sights?zone=ALL"
     })

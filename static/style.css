@@ -1,33 +1,31 @@
 /* ====================================================
-   基隆景點瀏覽器 - 深色調 Dark Mode Style (顯眼彈窗關閉鈕)
+   基隆景點導覽網 - 依據最新需求精確優化 Style (v17.0)
 ==================================================== */
 
 :root {
-    --bg-main: #0f172a;
-    --card-bg: #1e293b;
-    --card-inner: #0f172a;
-    --primary-color: #38bdf8;
-    --primary-hover: #0284c7;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --border-color: #334155;
-    --card-radius: 14px;
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
-    --shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.45);
+    --bg-main: #f8fafc;
+    --primary-pink: #d81b60;
+    --primary-pink-hover: #c2185b;
+    --primary-pink-light: #fce4ec;
+    --accent-orange: #f97316;
+    --text-dark: #0f172a;
+    --text-body: #334155;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --photo-radius: 18px;
 }
 
 html {
-    font-size: 17px;
+    font-size: 16px;
 }
 
 body {
-    font-family: 'Noto Sans TC', 'Outfit', sans-serif;
+    font-family: "Noto Sans TC", "Outfit", sans-serif;
     background-color: var(--bg-main);
-    color: var(--text-main);
+    color: var(--text-body);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-size: 1rem;
     line-height: 1.6;
 }
 
@@ -35,316 +33,320 @@ main {
     flex: 1;
 }
 
-/* Header Navbar Style */
-.site-header {
-    background: #1e293b;
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
+/* ====================================================
+   1. Header Hero Banner (港灣背景、不固定、隨頁面滾動移出視線)
+==================================================== */
+.hero-header-banner {
+    position: relative; /* 非 sticky，網頁下移時自然向上滾動消失 */
+    background-image: url("https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1600&auto=format&fit=crop");
+    background-size: cover;
+    background-position: center 40%;
+    min-height: 240px;
 }
 
-.brand-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.68) 0%, rgba(15, 23, 42, 0.45) 50%, rgba(15, 23, 42, 0.75) 100%);
+    z-index: 1;
 }
 
-/* 「基隆景點導覽」顯眼大字體 */
+/* 頂部標題：靠左對齊，無圖標，大中文 + 小英文 */
 .brand-title {
-    font-size: 2.3rem;
+    font-size: 2.2rem;
     font-weight: 900;
-    color: #ffffff;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 .brand-subtitle {
-    font-size: 1.05rem;
-    color: var(--text-muted);
+    font-size: 0.8rem;
     font-weight: 500;
-    margin-top: 6px;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* District Filter Buttons */
-.district-section {
-    background: #1e293b;
-    border-radius: var(--card-radius);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
+/* 中央搜尋列 */
+.hero-search-container {
+    max-width: 680px;
 }
 
-.section-heading {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #f8fafc;
+.search-box-wrapper {
+    background-color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
-.btn-district {
-    background: #0f172a;
-    border: 1.5px solid var(--border-color);
-    color: #cbd5e1;
-    font-weight: 500;
-    font-size: 1.02rem;
-    border-radius: 25px;
-    padding: 8px 20px;
-    transition: all 0.25s ease;
+.search-icon-btn {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    font-size: 0.95rem;
 }
 
-.btn-district:hover {
-    background: #334155;
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+.search-box-wrapper input::placeholder {
+    color: #94a3b8;
 }
 
-.btn-district.active {
-    background: #0284c7;
-    border-color: #38bdf8;
-    color: #ffffff;
-    font-weight: 600;
-    box-shadow: 0 0 16px rgba(56, 189, 248, 0.35);
-}
-
-.district-badge {
-    background: #0284c7;
-    color: #ffffff;
-    font-size: 1.15rem;
+/* 選區按鈕 (置於背景圖中、文字在框內、無下方文字) */
+.btn-zone-pill {
+    background-color: #ffffff;
+    border: 1.5px solid transparent;
+    color: var(--text-dark);
+    font-size: 0.95rem;
     font-weight: 700;
     padding: 6px 18px;
     border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+    white-space: nowrap;
 }
 
-.hot-sights-label {
-    color: #ffffff !important;
+.btn-zone-pill:hover {
+    background-color: #ffffff;
+    color: var(--accent-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
 }
 
-.sights-count-badge {
-    color: var(--text-muted);
-    font-size: 0.98rem;
-    font-weight: 500;
-}
-
-/* Sight Cards */
-.sight-card {
-    background: var(--card-bg);
-    border-radius: var(--card-radius);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.sight-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-    border-color: #475569;
-}
-
-.thumb-img {
-    width: 92px;
-    height: 92px;
-    min-width: 92px;
-    object-fit: cover;
-    border-radius: 10px;
-    background-color: #0f172a;
-    border: 1px solid var(--border-color);
-}
-
-.sight-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #f8fafc;
-    line-height: 1.35;
-    white-space: normal !important;
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-.sight-address {
-    color: #ffffff !important;
-    font-size: 0.96rem;
-    font-weight: 500;
-}
-
-.sight-address i {
-    color: #38bdf8;
-}
-
-.category-pill {
-    background: #0f172a;
-    color: #38bdf8;
-    border: 1px solid #1e3a8a;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 4px 11px;
-    border-radius: 15px;
-}
-
-.zone-pill {
-    background: #334155;
-    color: #e2e8f0;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 4px 11px;
-    border-radius: 15px;
-}
-
-/* Google Maps 按鈕 */
-.btn-gmaps {
-    background: #0f172a;
-    color: #e2e8f0;
-    border: 1px solid #475569;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 14px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    transition: all 0.2s ease;
-}
-
-.btn-gmaps:hover {
-    background: #334155;
+/* Active 選取狀態 (參照使用者圖片中的活力高亮橘/桃紅) */
+.btn-zone-pill.active {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border-color: #f97316;
     color: #ffffff;
-    border-color: #38bdf8;
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.45);
 }
 
-.btn-gmaps i {
-    color: #38bdf8;
-    font-size: 0.85rem;
-}
-
-/* 詳細介紹 按鈕 */
-.btn-toggle-details {
-    background: #0f172a;
-    border: 1px solid var(--border-color);
-    color: #38bdf8;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 8px 16px;
-    border-radius: 12px;
-    transition: all 0.2s ease;
-    width: 100%;
-}
-
-.btn-toggle-details:hover {
-    background: #334155;
-    border-color: #38bdf8;
+.btn-zone-pill.active:hover {
+    background: linear-gradient(135deg, #ea580c, #c2410c);
     color: #ffffff;
 }
 
 /* ====================================================
-   macOS 風格暗色彈窗 (高對比關閉按鈕)
+   2. 景點列表 (僅照片有外框，下方標題地址無外框)
+==================================================== */
+.current-zone-badge {
+    background-color: var(--accent-orange);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 5px 16px;
+    border-radius: 20px;
+}
+
+.sights-count-badge {
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    font-weight: 600;
+    background: #ffffff;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+/* 卡片容器：全透明無框無外邊距 */
+.borderless-sight-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    transition: transform 0.25s ease;
+}
+
+.borderless-sight-card:hover {
+    transform: translateY(-4px);
+}
+
+/* ★ 景點照片容器：僅此處有外框與圓角 ★ */
+.sight-img-container {
+    position: relative;
+    width: 100%;
+    height: 230px;
+    border: 2px solid #e2e8f0; /* 明確外框 */
+    border-radius: var(--photo-radius);
+    overflow: hidden;
+    background-color: #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.borderless-sight-card:hover .sight-img-container {
+    border-color: #cbd5e1;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+.sight-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.borderless-sight-card:hover .sight-photo {
+    transform: scale(1.06);
+}
+
+/* 左下角 Google Maps 浮動按鈕 (顯示 Google Maps 圖示與 Maps) */
+.gmaps-floating-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 5px 13px;
+    border-radius: 20px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    transition: all 0.2s ease;
+    z-index: 5;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.gmaps-floating-badge:hover {
+    background: #ffffff;
+    color: var(--primary-pink);
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* 照片下方的景點名稱與地址：無框、自然排版 */
+.text-pink {
+    color: var(--primary-pink) !important;
+}
+
+.borderless-sight-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary-pink);
+    line-height: 1.4;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    white-space: normal !important;
+    word-break: break-word;
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+    transition: color 0.2s ease;
+}
+
+.borderless-sight-title:hover {
+    color: var(--primary-pink-hover);
+    text-decoration: underline;
+}
+
+.borderless-sight-address {
+    color: var(--text-muted);
+    font-size: 0.93rem;
+    font-weight: 500;
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+/* ====================================================
+   3. Modal 彈窗樣式
 ==================================================== */
 .modal-backdrop {
-    background-color: rgba(2, 6, 23, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
 }
 
 .mac-modal-content {
-    background: rgba(30, 41, 59, 0.96);
-    backdrop-filter: blur(25px);
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    color: #f8fafc;
+    background: #ffffff;
+    color: var(--text-dark);
 }
 
-.mac-modal .modal-dialog {
-    transform: scale(0.82) translateY(15px);
-    opacity: 0;
-    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease-out;
-}
-
-.mac-modal.show .modal-dialog {
-    transform: scale(1) translateY(0);
-    opacity: 1;
-}
-
-/* 顯眼清晰的關閉按鈕 */
 .modal-btn-close {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 14px;
+    right: 14px;
     z-index: 20;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    background-color: #334155;
-    border: 1px solid #475569;
+    background-color: #0f172a;
+    border: 2px solid #ffffff;
     color: #ffffff !important;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .modal-btn-close:hover {
     background-color: #ef4444;
-    border-color: #dc2626;
+    border-color: #ffffff;
     color: #ffffff !important;
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(90deg);
 }
 
 .modal-img-wrapper {
     width: 100%;
-    max-height: 400px;
-    background-color: #0f172a;
-    border-radius: 12px;
-    overflow: hidden;
+    max-height: 380px;
+    background-color: #f1f5f9;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--border-color);
-    padding: 10px;
 }
 
 .modal-sight-img-contain {
-    max-height: 380px;
-    max-width: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-}
-
-.modal-sight-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #f8fafc;
-    word-break: break-word;
-}
-
-.modal-sight-address {
-    font-size: 1.02rem;
-    color: #ffffff !important;
-    font-weight: 500;
-}
-
-.modal-sight-address i {
-    color: #38bdf8;
+    max-height: 360px;
+    width: 100%;
+    object-fit: cover;
 }
 
 .modal-desc-box {
-    background: #0f172a;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 18px;
-    font-size: 1.05rem;
     line-height: 1.75;
-    color: #cbd5e1;
+    font-size: 1rem;
 }
 
-.modal-gmaps-link {
-    font-size: 0.9rem;
-    padding: 6px 14px;
+.btn-gmaps-modal {
+    background: var(--primary-pink);
+    color: #ffffff;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    border: none;
+    text-decoration: none;
+}
+
+.btn-gmaps-modal:hover {
+    background: var(--primary-pink-hover);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(216, 27, 96, 0.3);
+}
+
+.category-pill {
+    background: var(--primary-pink-light);
+    color: var(--primary-pink);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
+}
+
+.zone-pill {
+    background: #f1f5f9;
+    color: var(--text-body);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 12px;
 }
 
 /* Footer */
 .site-footer {
-    background: #1e293b;
-    border-top: 1px solid var(--border-color);
     color: var(--text-muted);
-    font-size: 0.98rem;
 }

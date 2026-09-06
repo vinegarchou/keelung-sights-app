@@ -17,53 +17,64 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom Style Sheet -->
-    <link rel="stylesheet" href="/static/style.css?v=13.0">
+    <link rel="stylesheet" href="/static/style.css?v=17.0">
 </head>
 <body>
 
-    <!-- Header Navbar (基隆景點導覽 置中純文字標題) -->
-    <header class="site-header py-4">
-        <div class="container d-flex align-items-center justify-content-center text-center">
-            <div class="brand-wrapper text-center">
-                <h1 class="h4 fw-bold mb-0 brand-title">基隆景點導覽</h1>
-                <p class="brand-subtitle mb-0 mt-1">Keelung Tourism Explorer</p>
+    <!-- Header Hero Banner (港灣背景、標題靠左無圖標、搜尋列與選區方塊於背景中、網頁下移時不固定顯示) -->
+    <header class="hero-header-banner position-relative">
+        <div class="hero-overlay"></div>
+        <div class="container position-relative z-2 py-4">
+            
+            <!-- 頂部標題靠左對齊，無左側圖示與右側多餘連結 -->
+            <div class="d-flex align-items-center justify-content-start mb-3">
+                <div class="brand-wrapper text-start">
+                    <h1 class="brand-title mb-0 text-white">基隆景點導覽</h1>
+                    <p class="brand-subtitle mb-0 text-white-50">Keelung Tourism Explorer</p>
+                </div>
             </div>
+
+            <!-- 中央搜尋列與選區按鈕 (置於 Header 港灣背景中) -->
+            <div class="hero-search-container text-center mx-auto my-3">
+                <div class="search-box-wrapper shadow rounded-pill p-1 bg-white d-flex align-items-center mx-auto mb-3">
+                    <div class="search-icon-btn rounded-circle d-flex align-items-center justify-content-center me-2 ms-1">
+                        <i class="fa-solid fa-magnifying-glass text-white"></i>
+                    </div>
+                    <input type="text" id="searchInput" class="form-control border-0 shadow-none bg-transparent ps-2 fs-6" placeholder="搜尋基隆景點..." aria-label="Search sights">
+                </div>
+
+                <!-- 選區按鈕 (文字全放方塊內，下方無多餘文字) -->
+                <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap" id="districtButtons">
+                    <button class="btn btn-zone-pill active" data-zone="ALL">ALL</button>
+                    <button class="btn btn-zone-pill" data-zone="中山區">中山區</button>
+                    <button class="btn btn-zone-pill" data-zone="信義區">信義區</button>
+                    <button class="btn btn-zone-pill" data-zone="中正區">中正區</button>
+                    <button class="btn btn-zone-pill" data-zone="仁愛區">仁愛區</button>
+                    <button class="btn btn-zone-pill" data-zone="安樂區">安樂區</button>
+                    <button class="btn btn-zone-pill" data-zone="暖暖區">暖暖區</button>
+                    <button class="btn btn-zone-pill" data-zone="七堵區">七堵區</button>
+                </div>
+            </div>
+
         </div>
     </header>
 
     <!-- Main Content Container -->
     <main class="container py-4">
 
-        <!-- District Filter Section -->
-        <section class="district-section p-4 mb-4">
-            <h2 class="section-heading mb-3">
-                <i class="fa-solid fa-map-location-dot me-2"></i>探索行政區
-            </h2>
-            
-            <div class="d-flex flex-wrap gap-2" id="districtButtons">
-                <button class="btn btn-district active" data-zone="中山區">中山區</button>
-                <button class="btn btn-district" data-zone="信義區">信義區</button>
-                <button class="btn btn-district" data-zone="仁愛區">仁愛區</button>
-                <button class="btn btn-district" data-zone="中正區">中正區</button>
-                <button class="btn btn-district" data-zone="安樂區">安樂區</button>
-                <button class="btn btn-district" data-zone="七堵區">七堵區</button>
-                <button class="btn btn-district" data-zone="暖暖區">暖暖區</button>
-            </div>
-        </section>
-
-        <!-- Status & Count Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4 px-1">
-            <div class="d-flex align-items-center">
-                <span id="currentDistrictTitle" class="district-badge me-3">中山區</span>
-                <span class="hot-sights-label fw-bold fs-5">熱門景點導覽</span>
+        <!-- Status & Count Bar -->
+        <div class="d-flex justify-content-between align-items-center mb-4 px-1 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <span id="currentDistrictTitle" class="current-zone-badge">全部景點</span>
+                <span class="text-muted small fs-6">點擊景點標題可查看詳細介紹</span>
             </div>
             <span class="sights-count-badge" id="sightsCountBadge">載入中...</span>
         </div>
 
-        <!-- Sights Cards Container -->
+        <!-- Sights Container (僅照片有框，下方標題地址無框) -->
         <div class="row g-4" id="sightsContainer">
             <div class="col-12 text-center py-5">
-                <div class="spinner-border text-secondary" role="status" style="width: 2.2rem; height: 2.2rem;">
+                <div class="spinner-border text-pink" role="status" style="width: 2.2rem; height: 2.2rem;">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <p class="mt-3 text-muted">正在載入景點資料...</p>
@@ -72,37 +83,37 @@
 
     </main>
 
-    <!-- 詳細介紹 彈窗 (關閉按鈕顯眼化) -->
+    <!-- 詳細介紹 彈窗 (超顯眼關閉按鈕) -->
     <div class="modal fade mac-modal" id="sightDetailModal" tabindex="-1" aria-labelledby="sightDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content mac-modal-content border-0 shadow-lg rounded-4 overflow-hidden">
-                <div class="modal-header border-0 pb-0 position-relative">
-                    <button type="button" class="btn modal-btn-close shadow-none d-flex align-items-center justify-content-center" data-bs-dismiss="modal" aria-label="Close">
+            <div class="modal-content mac-modal-content border-0 shadow-lg rounded-4 overflow-hidden bg-white">
+                <div class="modal-header border-0 pb-0 position-relative p-0">
+                    <button type="button" class="btn modal-btn-close shadow-lg d-flex align-items-center justify-content-center" data-bs-dismiss="modal" aria-label="Close">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
                 <div class="modal-body p-4 pt-2">
-                    <div class="modal-img-wrapper mb-3">
+                    <div class="modal-img-wrapper mb-3 position-relative rounded-4 overflow-hidden">
                         <img id="modalSightImg" src="" alt="景點圖片" class="modal-sight-img-contain">
                     </div>
                     
-                    <div class="d-flex align-items-center gap-2 mb-2">
+                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
                         <span id="modalSightCategory" class="category-pill"></span>
                         <span id="modalSightZone" class="zone-pill"></span>
                     </div>
 
-                    <h3 id="modalSightTitle" class="modal-sight-title mb-2"></h3>
-                    <p id="modalSightAddress" class="modal-sight-address mb-3">
-                        <i class="fa-solid fa-location-dot me-1"></i><span></span>
+                    <h3 id="modalSightTitle" class="modal-sight-title mb-2 text-pink fw-bold"></h3>
+                    <p id="modalSightAddress" class="modal-sight-address mb-3 text-secondary">
+                        <i class="fa-solid fa-location-dot me-1 text-pink"></i><span></span>
                     </p>
 
-                    <div class="modal-desc-box mb-4">
-                        <p id="modalSightDesc" class="mb-0"></p>
+                    <div class="modal-desc-box mb-4 p-3 bg-light rounded-3">
+                        <p id="modalSightDesc" class="mb-0 text-secondary"></p>
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <a id="modalGmapsBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-gmaps modal-gmaps-link">
-                            <i class="fa-solid fa-map-location-dot"></i> Google Maps
+                        <a id="modalGmapsBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-gmaps-modal">
+                            <i class="fa-solid fa-map-location-dot me-1"></i> Maps 導航
                         </a>
                     </div>
                 </div>
@@ -111,9 +122,9 @@
     </div>
 
     <!-- Footer -->
-    <footer class="site-footer py-4 text-center mt-5">
-        <div class="container">
-            <p class="mb-1 fw-medium">基隆景點瀏覽器 &copy; Keelung Tourism Explorer</p>
+    <footer class="site-footer py-4 bg-white border-top text-center mt-5">
+        <div class="container text-start text-md-center">
+            <p class="mb-1 fw-bold text-dark fs-6">基隆景點導覽 &copy; Keelung Tourism Explorer</p>
         </div>
     </footer>
 
@@ -121,6 +132,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JavaScript -->
-    <script src="/static/main.js?v=13.0"></script>
+    <script src="/static/main.js?v=17.0"></script>
 </body>
 </html>

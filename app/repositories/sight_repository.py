@@ -14,6 +14,11 @@ class SightRepository:
         cursor = self.collection.find({"zone": zone}, {"_id": 0})
         return list(cursor)
 
+    def get_all(self) -> List[Dict[str, Any]]:
+        """從 MongoDB 中查詢所有行政區的景點 (排除 _id)"""
+        cursor = self.collection.find({}, {"_id": 0})
+        return list(cursor)
+
     def upsert_sight(self, sight_data: Dict[str, Any]) -> bool:
         """
         根據 sight_name 作為鍵進行 upsert

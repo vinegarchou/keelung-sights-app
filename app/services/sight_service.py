@@ -24,13 +24,16 @@ class SightService:
         並檢查是否為基隆市有效行政區。若無效則拋出 ValueError。
         """
         if not zone or not zone.strip():
-            zone = "七堵區"
+            return "ALL"
         
         clean_z = zone.strip()
+        if clean_z.upper() in ["ALL", "全部", "全部景點"]:
+            return "ALL"
+
         normalized = ZONE_ALIAS.get(clean_z, clean_z if clean_z.endswith("區") else f"{clean_z}區")
 
         if normalized not in VALID_ZONES:
-            raise ValueError(f"無效的基隆行政區名稱: '{zone}'。有效區域為: {', '.join(sorted(VALID_ZONES))}")
+            raise ValueError(f"無效的基隆行政區名稱: '{zone}'。有效區域為: ALL, {', '.join(sorted(VALID_ZONES))}")
         
         return normalized
 
@@ -38,8 +41,17 @@ class SightService:
         """
         接收 API 傳入的區域名稱，完成正規化與驗證後，
         呼叫 Repository 從 MongoDB 取得景點資料並回傳 List[Sight]。
+        支援 zone='ALL' 取得全部景點。
         """
         normalized_zone = self.normalize_zone(zone)
+
+        if normalized_zone == "ALL":
+            raw_sights = self.repository.get_all()
+            if not raw_sights:
+                self.refresh_sights()
+                raw_sights = self.repository.get_all()
+            return [Sight(**item) for item in raw_sights]
+
         raw_sights = self.repository.get_by_zone(normalized_zone)
         
         # 若資料庫中無資料，自動呼叫爬蟲補充並寫入 MongoDB

@@ -1,44 +1,68 @@
 /**
- * 基隆景點瀏覽器 - 低飽和 Morandi Style & Modal JavaScript 邏輯
+ * 基隆景點導覽網 - JavaScript (v17.0)
+ * 支援 ALL 全部景點、即時關鍵字搜尋、僅照片外框排版、Google Maps 標章
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    const districtButtonsContainer = document.getElementById('districtButtons');
-    const sightsContainer = document.getElementById('sightsContainer');
-    const currentDistrictTitle = document.getElementById('currentDistrictTitle');
-    const sightsCountBadge = document.getElementById('sightsCountBadge');
+document.addEventListener("DOMContentLoaded", () => {
+    const districtButtonsContainer = document.getElementById("districtButtons");
+    const sightsContainer = document.getElementById("sightsContainer");
+    const currentDistrictTitle = document.getElementById("currentDistrictTitle");
+    const sightsCountBadge = document.getElementById("sightsCountBadge");
+    const searchInput = document.getElementById("searchInput");
 
     // Modal 元素引用
-    const sightDetailModalEl = document.getElementById('sightDetailModal');
+    const sightDetailModalEl = document.getElementById("sightDetailModal");
     const sightDetailModal = new bootstrap.Modal(sightDetailModalEl);
 
-    const modalSightImg = document.getElementById('modalSightImg');
-    const modalSightCategory = document.getElementById('modalSightCategory');
-    const modalSightZone = document.getElementById('modalSightZone');
-    const modalSightTitle = document.getElementById('modalSightTitle');
-    const modalSightAddress = document.getElementById('modalSightAddress').querySelector('span');
-    const modalSightDesc = document.getElementById('modalSightDesc');
-    const modalGmapsBtn = document.getElementById('modalGmapsBtn');
+    const modalSightImg = document.getElementById("modalSightImg");
+    const modalSightCategory = document.getElementById("modalSightCategory");
+    const modalSightZone = document.getElementById("modalSightZone");
+    const modalSightTitle = document.getElementById("modalSightTitle");
+    const modalSightAddress = document.getElementById("modalSightAddress").querySelector("span");
+    const modalSightDesc = document.getElementById("modalSightDesc");
+    const modalGmapsBtn = document.getElementById("modalGmapsBtn");
 
-    // 全局緩存目前景點清單
+    // 全局景點資料快取
     let currentSightsList = [];
+    let filteredSightsList = [];
 
-    // 預設載入行政區：中山區
-    let currentZone = "中山區";
+    // 預設載入：ALL 全部景點
+    let currentZone = "ALL";
     loadSights(currentZone);
 
-    // 行政區按鈕切換
-    districtButtonsContainer.addEventListener('click', (e) => {
-        const btn = e.target.closest('.btn-district');
-        if (!btn) return;
+    // 行政區按鈕切換 (置於 Header 港灣背景中的 Pill 按鈕)
+    if (districtButtonsContainer) {
+        districtButtonsContainer.addEventListener("click", (e) => {
+            const btn = e.target.closest(".btn-zone-pill");
+            if (!btn) return;
 
-        document.querySelectorAll('.btn-district').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+            document.querySelectorAll(".btn-zone-pill").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
 
-        currentZone = btn.dataset.zone;
-        currentDistrictTitle.textContent = currentZone;
-        loadSights(currentZone);
-    });
+            currentZone = btn.dataset.zone;
+            currentDistrictTitle.textContent = currentZone === "ALL" ? "全部景點" : currentZone;
+            if (searchInput) searchInput.value = "";
+            loadSights(currentZone);
+        });
+    }
+
+    // 關鍵字搜尋過濾
+    if (searchInput) {
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) {
+                filteredSightsList = [...currentSightsList];
+            } else {
+                filteredSightsList = currentSightsList.filter(sight => 
+                    (sight.sight_name && sight.sight_name.toLowerCase().includes(query)) ||
+                    (sight.address && sight.address.toLowerCase().includes(query)) ||
+                    (sight.category && sight.category.toLowerCase().includes(query)) ||
+                    (sight.description && sight.description.toLowerCase().includes(query))
+                );
+            }
+            renderSights(filteredSightsList);
+        });
+    }
 
     /**
      * 發送 API 請求取得景點資料
@@ -52,22 +76,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(errJson.detail || `HTTP 錯誤: ${res.status}`);
             }
             currentSightsList = await res.json();
-            renderSights(currentSightsList);
+            filteredSightsList = [...currentSightsList];
+            renderSights(filteredSightsList);
         } catch (err) {
-            console.error('Fetch sights error:', err);
+            console.error("Fetch sights error:", err);
             showErrorState(err.message);
         }
     }
 
     /**
-     * 渲染景點卡片清單 (支援長景點名稱自動換行)
+     * 渲染景點卡片 (僅照片有外框，下方景點名稱與地址無框)
      */
     function renderSights(sights) {
         if (!sights || sights.length === 0) {
             sightsContainer.innerHTML = `
                 <div class="col-12 text-center py-5">
-                    <i class="fa-solid fa-cloud-sun fa-3x text-muted mb-3"></i>
-                    <p class="h5 text-muted">此區域目前暫無景點資料。</p>
+                    <i class="fa-solid fa-compass-drafting fa-3x text-muted mb-3 opacity-50"></i>
+                    <p class="h5 text-muted">此區域目前無景點資料。</p>
                 </div>
             `;
             sightsCountBadge.textContent = "共 0 個景點";
@@ -76,49 +101,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
         sightsCountBadge.textContent = `共 ${sights.length} 個景點`;
 
-        let cardsHtml = '';
+        let cardsHtml = "";
         sights.forEach((sight, idx) => {
             const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sight.address || sight.sight_name)}`;
-            const photoUrl = sight.photo_url || 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&auto=format&fit=crop';
-            const category = sight.category || '熱門景點';
+            const photoUrl = sight.photo_url || "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&auto=format&fit=crop";
 
             cardsHtml += `
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card sight-card h-100 p-3 d-flex flex-column">
+                    <div class="borderless-sight-card h-100 d-flex flex-column">
                         
-                        <!-- 頂部景點縮圖與基本標題資訊 -->
-                        <div class="d-flex align-items-start gap-3 mb-3">
+                        <!-- ★ 僅照片有外框 (sight-img-container) ★ -->
+                        <div class="sight-img-container position-relative">
                             <img src="${photoUrl}" 
                                  alt="${sight.sight_name}" 
-                                 class="thumb-img"
-                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200&auto=format&fit=crop';">
+                                 class="sight-photo"
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop';">
                             
-                            <div class="flex-grow-1 min-w-0">
-                                <div class="d-flex align-items-center gap-1 mb-1">
-                                    <span class="category-pill">${category}</span>
-                                </div>
-
-                                <!-- 景點名稱 (長名稱自動換行) -->
-                                <h3 class="sight-title mb-2" title="${sight.sight_name}">${sight.sight_name}</h3>
-                                
-                                <!-- Google Maps 按鈕 (尺寸精簡) -->
-                                <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="btn-gmaps">
-                                    <i class="fa-solid fa-map-location-dot"></i> Google Maps
-                                </a>
-                            </div>
+                            <!-- Google Maps 浮動按鈕 (Google Maps 圖標 + Maps) -->
+                            <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="gmaps-floating-badge" onclick="event.stopPropagation();">
+                                <svg width="12" height="16" viewBox="0 0 92 130" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-1">
+                                    <path d="M46 0C20.59 0 0 20.59 0 46C0 80.5 46 130 46 130C46 130 92 80.5 92 46C92 20.59 71.41 0 46 0Z" fill="#EA4335"/>
+                                    <circle cx="46" cy="46" r="18" fill="#FFFFFF"/>
+                                </svg>
+                                <span>Maps</span>
+                            </a>
                         </div>
 
-                        <!-- 地址資訊 (純白字體) -->
-                        <p class="sight-address mb-3 text-truncate" title="${sight.address}">
-                            <i class="fa-solid fa-location-dot me-1"></i>${sight.address || '基隆市' + sight.zone}
+                        <!-- ★ 下方景點名稱與地址：無外框，自然排列 ★ -->
+                        <h3 class="borderless-sight-title btn-open-modal" data-index="${idx}" title="${sight.sight_name}">
+                            ${sight.sight_name}
+                        </h3>
+
+                        <p class="borderless-sight-address mb-0 text-truncate" title="${sight.address || '基隆市' + (sight.zone || '')}">
+                            <i class="fa-solid fa-map-pin me-1 text-secondary"></i>${sight.address || '基隆市' + (sight.zone || '')}
                         </p>
-
-                        <!-- 詳細介紹 按鈕 (點擊彈出小彈窗) -->
-                        <div class="mt-auto pt-2">
-                            <button class="btn btn-toggle-details btn-open-modal" data-index="${idx}">
-                                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> 詳細介紹
-                            </button>
-                        </div>
 
                     </div>
                 </div>
@@ -128,10 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
         sightsContainer.innerHTML = cardsHtml;
 
         // 綁定詳細介紹 Modal 彈窗開關事件
-        document.querySelectorAll('.btn-open-modal').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        document.querySelectorAll(".btn-open-modal").forEach(btn => {
+            btn.addEventListener("click", (e) => {
                 const index = parseInt(e.currentTarget.dataset.index, 10);
-                openSightModal(currentSightsList[index]);
+                openSightModal(filteredSightsList[index]);
             });
         });
     }
@@ -142,19 +158,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function openSightModal(sight) {
         if (!sight) return;
 
-        const photoUrl = sight.photo_url || 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop';
+        const photoUrl = sight.photo_url || "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop";
         const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sight.address || sight.sight_name)}`;
 
         modalSightImg.src = photoUrl;
         modalSightImg.onerror = () => {
-            modalSightImg.src = 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop';
+            modalSightImg.src = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop";
         };
 
-        modalSightCategory.textContent = sight.category || '熱門景點';
-        modalSightZone.textContent = sight.zone || '基隆市';
+        modalSightCategory.textContent = sight.category || "熱門景點";
+        modalSightZone.textContent = sight.zone || "基隆市";
         modalSightTitle.textContent = sight.sight_name;
-        modalSightAddress.textContent = sight.address || ('基隆市' + sight.zone);
-        modalSightDesc.textContent = sight.description || '暫無詳細描述資料。';
+        modalSightAddress.textContent = sight.address || ("基隆市" + (sight.zone || ''));
+        modalSightDesc.textContent = sight.description || "暫無詳細描述資料。";
         modalGmapsBtn.href = googleMapsUrl;
 
         sightDetailModal.show();
@@ -164,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sightsCountBadge.textContent = "載入中...";
         sightsContainer.innerHTML = `
             <div class="col-12 text-center py-5">
-                <div class="spinner-border text-secondary" role="status" style="width: 2.2rem; height: 2.2rem;">
+                <div class="spinner-border text-pink" role="status" style="width: 2.2rem; height: 2.2rem;">
                     <span class="visually-hidden">Loading...</span>
                 </div>
                 <p class="mt-3 text-muted">正在載入景點資料...</p>
