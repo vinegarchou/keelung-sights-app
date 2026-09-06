@@ -219,22 +219,23 @@ main {
     transform: scale(1.06);
 }
 
-/* 左下角 Google Maps 浮動按鈕 (顯示 Google Maps 圖示與 Maps) */
+/* 左下角 Google Maps 浮動按鈕 (尺寸更小巧、圖標與 Maps 無空隙) */
 .gmaps-floating-badge {
     position: absolute;
-    bottom: 12px;
-    left: 12px;
+    bottom: 8px;
+    left: 8px;
     background: #ffffff;
     color: #1e293b;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    padding: 5px 13px;
-    border-radius: 20px;
+    line-height: 1;
+    padding: 3px 8px;
+    border-radius: 12px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    gap: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
     transition: all 0.2s ease;
     z-index: 5;
     border: 1px solid rgba(0, 0, 0, 0.06);
@@ -242,9 +243,9 @@ main {
 
 .gmaps-floating-badge:hover {
     background: #ffffff;
-    color: var(--primary-pink);
-    transform: scale(1.05);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    color: #0284c7;
+    transform: scale(1.04);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
 }
 
 /* 照片下方的景點名稱與地址：無框、自然排版 */
@@ -382,8 +383,11 @@ main {
 
 /* 使用者自訂 Google Maps 圖標 */
 .gmaps-icon-img {
-    width: 17px;
-    height: 17px;
+    width: 13px;
+    height: 13px;
     object-fit: contain;
-    vertical-align: -2px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    vertical-align: -1px;
 }

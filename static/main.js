@@ -117,11 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                  class="sight-photo"
                                  onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop';">
                             
-                            <!-- Google Maps 浮動按鈕 (使用者指定多彩地標圖標 + Maps) -->
-                            <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="gmaps-floating-badge" onclick="event.stopPropagation();">
-                                <img src="/static/images/google_maps_icon.png" alt="Maps" class="gmaps-icon-img me-1">
-                                <span>Maps</span>
-                            </a>
+                            <!-- Google Maps 浮動按鈕 (精巧尺寸、圖標與 Maps 無空隙) -->
+                            <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="gmaps-floating-badge" onclick="event.stopPropagation();"><img src="/static/images/google_maps_icon.png" alt="Maps" class="gmaps-icon-img"><span>Maps</span></a>
                         </div>
 
                         <!-- ★ 下方景點名稱與地址：無外框，自然排列 ★ -->
