@@ -45,8 +45,9 @@ main {
     position: relative; /* 非 sticky，隨頁面下移自然滾動移出畫面 */
     background-image: url("/static/images/keelung_sunset_banner.jpg");
     background-size: cover;
-    background-position: center 38%;
-    min-height: 250px;
+    background-position: center 42%;
+    min-height: 350px;
+    padding: 20px 0 10px;
 }
 
 .hero-overlay {
@@ -200,6 +201,7 @@ main {
     overflow: hidden;
     background-color: #e2e8f0;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -219,23 +221,23 @@ main {
     transform: scale(1.06);
 }
 
-/* 左下角 Google Maps 浮動按鈕 (尺寸更小巧、圖標與 Maps 無空隙) */
+/* 左下角 Google Maps 浮動按鈕 (消除兩側多餘留白，尺寸適度微調放大) */
 .gmaps-floating-badge {
     position: absolute;
-    bottom: 8px;
-    left: 8px;
+    bottom: 9px;
+    left: 9px;
     background: #ffffff;
     color: #1e293b;
-    font-size: 0.75rem;
+    font-size: 0.84rem;
     font-weight: 700;
     line-height: 1;
-    padding: 3px 8px;
-    border-radius: 12px;
+    padding: 3px 5px;
+    border-radius: 9px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
     transition: all 0.2s ease;
     z-index: 5;
     border: 1px solid rgba(0, 0, 0, 0.06);
@@ -383,11 +385,11 @@ main {
 
 /* 使用者自訂 Google Maps 圖標 */
 .gmaps-icon-img {
-    width: 13px;
-    height: 13px;
+    width: 15px;
+    height: 15px;
     object-fit: contain;
     margin: 0;
     padding: 0;
     display: inline-block;
-    vertical-align: -1px;
+    vertical-align: -1.5px;
 }

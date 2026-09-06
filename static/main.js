@@ -110,8 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="borderless-sight-card h-100 d-flex flex-column">
                         
-                        <!-- ★ 僅照片有外框 (sight-img-container) ★ -->
-                        <div class="sight-img-container position-relative">
+                        <!-- ★ 點擊照片亦可開啟詳細介紹 (btn-open-modal) ★ -->
+                        <div class="sight-img-container position-relative btn-open-modal" data-index="${idx}" title="點擊查看詳細介紹">
                             <img src="${photoUrl}" 
                                  alt="${sight.sight_name}" 
                                  class="sight-photo"
