@@ -11,7 +11,8 @@
     --primary-pink: #d81b60;
     --primary-pink-hover: #c2185b;
     --primary-pink-light: #fce4ec;
-    --accent-orange: #f97316;
+    --accent-blue: #0284c7;
+    --accent-blue-hover: #0369a1;
     --text-dark: #0f172a;
     --text-body: #334155;
     --text-muted: #64748b;
@@ -42,7 +43,7 @@ main {
 ==================================================== */
 .hero-header-banner {
     position: relative; /* 非 sticky，隨頁面下移自然滾動移出畫面 */
-    background-image: url("/static/images/keelung_harbor_banner.jpg");
+    background-image: url("/static/images/keelung_sunset_banner.jpg");
     background-size: cover;
     background-position: center 38%;
     min-height: 250px;
@@ -76,15 +77,7 @@ main {
     margin-top: 2px;
 }
 
-/* ★ keelung tourism explorer 下方直線：延伸到最右邊 ★ */
-.brand-underline {
-    width: 100%;
-    height: 2px;
-    background-color: rgba(255, 255, 255, 0.75);
-    margin-top: 8px;
-    border-radius: 1px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-}
+
 
 /* 中央搜尋列 */
 .hero-search-container {
@@ -144,21 +137,21 @@ main {
 
 .btn-zone-pill:hover {
     background-color: #ffffff;
-    color: var(--accent-orange);
+    color: #0284c7;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
 }
 
-/* Active 選取狀態 */
+/* Active 選取狀態 (與搜尋放大鏡一致的湛藍質感) */
 .btn-zone-pill.active {
-    background: linear-gradient(135deg, #f97316, #ea580c);
-    border-color: #f97316;
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    border-color: #0284c7;
     color: #ffffff;
-    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.45);
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.45);
 }
 
 .btn-zone-pill.active:hover {
-    background: linear-gradient(135deg, #ea580c, #c2410c);
+    background: linear-gradient(135deg, #0369a1, #075985);
     color: #ffffff;
 }
 
@@ -166,7 +159,7 @@ main {
    2. 景點列表 (僅照片有外框，下方標題地址無外框)
 ==================================================== */
 .current-zone-badge {
-    background-color: var(--accent-orange);
+    background-color: #0284c7;
     color: #ffffff;
     font-size: 0.95rem;
     font-weight: 700;
@@ -384,4 +377,13 @@ main {
 /* Footer */
 .site-footer {
     color: var(--text-muted);
+}
+
+
+/* 使用者自訂 Google Maps 圖標 */
+.gmaps-icon-img {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+    vertical-align: -2px;
 }

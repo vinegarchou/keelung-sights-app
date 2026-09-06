@@ -117,12 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                  class="sight-photo"
                                  onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop';">
                             
-                            <!-- Google Maps 浮動按鈕 (Google Maps 圖標 + Maps) -->
+                            <!-- Google Maps 浮動按鈕 (使用者指定多彩地標圖標 + Maps) -->
                             <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="gmaps-floating-badge" onclick="event.stopPropagation();">
-                                <svg width="12" height="16" viewBox="0 0 92 130" fill="none" xmlns="http://www.w3.org/2000/svg" class="me-1">
-                                    <path d="M46 0C20.59 0 0 20.59 0 46C0 80.5 46 130 46 130C46 130 92 80.5 92 46C92 20.59 71.41 0 46 0Z" fill="#EA4335"/>
-                                    <circle cx="46" cy="46" r="18" fill="#FFFFFF"/>
-                                </svg>
+                                <img src="/static/images/google_maps_icon.png" alt="Maps" class="gmaps-icon-img me-1">
                                 <span>Maps</span>
                             </a>
                         </div>
