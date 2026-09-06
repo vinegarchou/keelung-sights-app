@@ -17,24 +17,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom Style Sheet -->
-    <link rel="stylesheet" href="/static/style.css?v=17.0">
+    <link rel="stylesheet" href="/static/style.css?v=18.0">
 </head>
 <body>
 
-    <!-- Header Hero Banner (港灣背景、標題靠左無圖標、搜尋列與選區方塊於背景中、網頁下移時不固定顯示) -->
+    <!-- Header Hero Banner (港灣橫幅背景、標題靠左、英文下方直線、選區同列不換行、下移隨頁面滾動) -->
     <header class="hero-header-banner position-relative">
         <div class="hero-overlay"></div>
         <div class="container position-relative z-2 py-4">
             
-            <!-- 頂部標題靠左對齊，無左側圖示與右側多餘連結 -->
+            <!-- 頂部標題靠左對齊，無左側圖標，英文下方附帶一條直線 -->
             <div class="d-flex align-items-center justify-content-start mb-3">
                 <div class="brand-wrapper text-start">
                     <h1 class="brand-title mb-0 text-white">基隆景點導覽</h1>
                     <p class="brand-subtitle mb-0 text-white-50">Keelung Tourism Explorer</p>
+                    <div class="brand-underline"></div>
                 </div>
             </div>
 
-            <!-- 中央搜尋列與選區按鈕 (置於 Header 港灣背景中) -->
+            <!-- 中央搜尋列與選區按鈕 (所有按鈕確保在同一列，不換行) -->
             <div class="hero-search-container text-center mx-auto my-3">
                 <div class="search-box-wrapper shadow rounded-pill p-1 bg-white d-flex align-items-center mx-auto mb-3">
                     <div class="search-icon-btn rounded-circle d-flex align-items-center justify-content-center me-2 ms-1">
@@ -43,16 +44,18 @@
                     <input type="text" id="searchInput" class="form-control border-0 shadow-none bg-transparent ps-2 fs-6" placeholder="搜尋基隆景點..." aria-label="Search sights">
                 </div>
 
-                <!-- 選區按鈕 (文字全放方塊內，下方無多餘文字) -->
-                <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap" id="districtButtons">
-                    <button class="btn btn-zone-pill active" data-zone="ALL">ALL</button>
-                    <button class="btn btn-zone-pill" data-zone="中山區">中山區</button>
-                    <button class="btn btn-zone-pill" data-zone="信義區">信義區</button>
-                    <button class="btn btn-zone-pill" data-zone="中正區">中正區</button>
-                    <button class="btn btn-zone-pill" data-zone="仁愛區">仁愛區</button>
-                    <button class="btn btn-zone-pill" data-zone="安樂區">安樂區</button>
-                    <button class="btn btn-zone-pill" data-zone="暖暖區">暖暖區</button>
-                    <button class="btn btn-zone-pill" data-zone="七堵區">七堵區</button>
+                <!-- 選區按鈕列 (同一列 nowrap，全域排列整齊) -->
+                <div class="district-buttons-wrapper">
+                    <div class="d-flex align-items-center justify-content-center gap-2 flex-nowrap" id="districtButtons">
+                        <button class="btn btn-zone-pill active" data-zone="ALL">ALL</button>
+                        <button class="btn btn-zone-pill" data-zone="中山區">中山區</button>
+                        <button class="btn btn-zone-pill" data-zone="信義區">信義區</button>
+                        <button class="btn btn-zone-pill" data-zone="中正區">中正區</button>
+                        <button class="btn btn-zone-pill" data-zone="仁愛區">仁愛區</button>
+                        <button class="btn btn-zone-pill" data-zone="安樂區">安樂區</button>
+                        <button class="btn btn-zone-pill" data-zone="暖暖區">暖暖區</button>
+                        <button class="btn btn-zone-pill" data-zone="七堵區">七堵區</button>
+                    </div>
                 </div>
             </div>
 
@@ -132,6 +135,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Custom JavaScript -->
-    <script src="/static/main.js?v=17.0"></script>
+    <script src="/static/main.js?v=18.0"></script>
 </body>
 </html>
