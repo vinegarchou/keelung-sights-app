@@ -1,7 +1,7 @@
 # 🌊 基隆景點導覽與 Web API (Keelung Tourism Explorer)
 
 > **國立臺灣海洋大學 (NTOU) Web 專案 / 景點導覽與網頁爬蟲 API 系統**  
-> 基於 **Python FastAPI + MongoDB Atlas + Repository & Service 雙層架構 + BeautifulSoup 爬蟲**，搭配 **現代觀光導覽風（傍晚夕陽全景 Header、多彩地標按鈕、無框卡片與即時搜尋）** 的基隆景點導覽平台。
+> 基於 **Python FastAPI + MongoDB Atlas + Repository & Service 雙層架構 + BeautifulSoup 爬蟲** 的基隆景點導覽平台。
 
 ---
 
