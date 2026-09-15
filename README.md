@@ -1,11 +1,11 @@
-# 🌊 基隆景點導覽與 Web API (Keelung Tourism Explorer)
+# 基隆景點導覽與 Web API (Keelung Tourism Explorer)
 
 > **國立臺灣海洋大學 (NTOU) Web 專案 / 景點導覽與網頁爬蟲 API 系統**  
 > 基於 **Python FastAPI + MongoDB Atlas + Repository & Service 雙層架構 + BeautifulSoup 爬蟲** 的基隆景點導覽平台。
 
 ---
 
-## 🔗 雲端公開部署資訊 (Render)
+## 雲端公開部署資訊 (Render)
 
 * **雲端前端網頁與 Web API 網址**：`https://keelung-sights-app-owmc.onrender.com`
 * **FastAPI 自動產生 Swagger 文件網址**：`https://keelung-sights-app-owmc.onrender.com/docs`
@@ -13,7 +13,7 @@
 
 ---
 
-## 📁 專案架構與檔案結構 (Project Structure)
+## 專案架構與檔案結構 (Project Structure)
 
 ```text
 海大基隆網站/
@@ -44,7 +44,7 @@
 
 ---
 
-## 💻 本機執行方式 (Local Setup)
+## 本機執行方式 (Local Setup)
 
 ### 1. 建立虛擬環境與安裝依賴
 ```bash
@@ -78,7 +78,7 @@ python -m uvicorn app.main:app --reload --port 8000
 
 ---
 
-## 🐳 Docker 執行方式 (Docker Setup)
+## Docker 執行方式 (Docker Setup)
 
 ### 1. 建置 Docker Image
 ```bash
@@ -93,7 +93,7 @@ docker run -d   -p 8000:8000   -e MONGODB_URI="mongodb+srv://<user>:<password>@c
 
 ---
 
-## ☁️ 雲端環境變數設定 (Environment Variables)
+## 雲端環境變數設定 (Environment Variables)
 
 在 Render 部署時，請在 **Environment** 頁面設定以下環境變數：
 
@@ -105,7 +105,7 @@ docker run -d   -p 8000:8000   -e MONGODB_URI="mongodb+srv://<user>:<password>@c
 
 ---
 
-## 🚀 Render 雲端部署步驟 (Render Deployment Steps)
+## Render 雲端部署步驟 (Render Deployment Steps)
 
 1. **將專案推送到 GitHub 儲存庫**：
    ```bash
