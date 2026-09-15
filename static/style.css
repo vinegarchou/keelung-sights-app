@@ -102,15 +102,13 @@ main {
     color: #94a3b8;
 }
 
-/* ★ 選區按鈕列：強制同一列、不換行 ★ */
+/* ★ 選區按鈕列：解決手機端最左側按鈕截斷問題 ★ */
 .district-buttons-wrapper {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* 隱藏捲軸 */
-    padding-bottom: 2px;
-    display: flex;
-    justify-content: center;
+    padding-bottom: 4px;
 }
 
 .district-buttons-wrapper::-webkit-scrollbar {
@@ -118,8 +116,22 @@ main {
 }
 
 #districtButtons {
+    display: flex !important;
     flex-wrap: nowrap !important;
     white-space: nowrap !important;
+    width: max-content;
+    min-width: 100%;
+    /* 手機端靠左開始排，留左右內距，讓 ALL 完整露出且能向右平滑滑動 */
+    justify-content: flex-start !important;
+    padding: 0 16px;
+}
+
+/* 電腦版螢幕夠寬時置中 */
+@media (min-width: 768px) {
+    #districtButtons {
+        justify-content: center !important;
+        padding: 0;
+    }
 }
 
 .btn-zone-pill {
