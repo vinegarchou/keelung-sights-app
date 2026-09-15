@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sightDetailModal = new bootstrap.Modal(sightDetailModalEl);
 
     const modalSightImg = document.getElementById("modalSightImg");
+    const modalNoPhoto = document.getElementById("modalNoPhoto");
     const modalSightCategory = document.getElementById("modalSightCategory");
     const modalSightZone = document.getElementById("modalSightZone");
     const modalSightTitle = document.getElementById("modalSightTitle");
@@ -104,7 +105,23 @@ document.addEventListener("DOMContentLoaded", () => {
         let cardsHtml = "";
         sights.forEach((sight, idx) => {
             const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sight.address || sight.sight_name)}`;
-            const photoUrl = sight.photo_url || "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&auto=format&fit=crop";
+            const hasPhoto = !!(sight.photo_url && sight.photo_url.trim());
+
+            const photoHtml = hasPhoto ? `
+                <img src="${sight.photo_url}" 
+                     alt="${sight.sight_name}" 
+                     class="sight-photo"
+                     onerror="this.style.display='none'; this.nextElementSibling.classList.remove('d-none');">
+                <div class="no-photo-placeholder d-none d-flex flex-column align-items-center justify-content-center h-100 text-muted">
+                    <i class="fa-regular fa-image fa-2x mb-2 opacity-50"></i>
+                    <span class="no-photo-text">沒有圖片</span>
+                </div>
+            ` : `
+                <div class="no-photo-placeholder d-flex flex-column align-items-center justify-content-center h-100 text-muted">
+                    <i class="fa-regular fa-image fa-2x mb-2 opacity-50"></i>
+                    <span class="no-photo-text">沒有圖片</span>
+                </div>
+            `;
 
             cardsHtml += `
                 <div class="col-12 col-md-6 col-lg-4">
@@ -112,11 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         <!-- ★ 點擊照片亦可開啟詳細介紹 (btn-open-modal) ★ -->
                         <div class="sight-img-container position-relative btn-open-modal" data-index="${idx}" title="點擊查看詳細介紹">
-                            <img src="${photoUrl}" 
-                                 alt="${sight.sight_name}" 
-                                 class="sight-photo"
-                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop';">
-                            
+                            ${photoHtml}
                             <!-- Google Maps 浮動按鈕 (精巧尺寸、圖標與 Maps 無空隙) -->
                             <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="gmaps-floating-badge" onclick="event.stopPropagation();"><img src="/static/images/google_maps_icon.png" alt="Maps" class="gmaps-icon-img"><span>Maps</span></a>
                         </div>
@@ -152,13 +165,21 @@ document.addEventListener("DOMContentLoaded", () => {
     function openSightModal(sight) {
         if (!sight) return;
 
-        const photoUrl = sight.photo_url || "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&auto=format&fit=crop";
         const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sight.address || sight.sight_name)}`;
+        const hasPhoto = !!(sight.photo_url && sight.photo_url.trim());
 
-        modalSightImg.src = photoUrl;
-        modalSightImg.onerror = () => {
-            modalSightImg.src = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop";
-        };
+        if (hasPhoto) {
+            modalSightImg.style.display = "block";
+            if (modalNoPhoto) modalNoPhoto.classList.add("d-none");
+            modalSightImg.src = sight.photo_url;
+            modalSightImg.onerror = () => {
+                modalSightImg.style.display = "none";
+                if (modalNoPhoto) modalNoPhoto.classList.remove("d-none");
+            };
+        } else {
+            modalSightImg.style.display = "none";
+            if (modalNoPhoto) modalNoPhoto.classList.remove("d-none");
+        }
 
         modalSightCategory.textContent = sight.category || "熱門景點";
         modalSightZone.textContent = sight.zone || "基隆市";
