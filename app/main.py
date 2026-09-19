@@ -79,7 +79,7 @@ def get_sights_by_zone(
         return service.get_sights_by_zone(zone)
     except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail=str(e)
         )
     except Exception as e:

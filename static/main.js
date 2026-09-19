@@ -86,6 +86,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /**
+     * 取得 Google Maps 搜尋連結：
+     * 若地址僅有「基隆市」或「基隆市XX區」等模糊行政區，改用景點名稱搜尋以精準定位
+     */
+    function getGoogleMapsUrl(sight) {
+        if (!sight) return '#';
+        const addr = (sight.address || '').trim();
+        const isOnlyDistrict = !addr || /^基隆市[一-龥]{0,3}區?$/.test(addr);
+        const query = isOnlyDistrict ? (sight.sight_name ? `${sight.sight_name} 基隆` : addr) : addr;
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+    }
+
+    /**
      * 渲染景點卡片 (僅照片有外框，下方景點名稱與地址無框)
      */
     function renderSights(sights) {
@@ -104,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let cardsHtml = "";
         sights.forEach((sight, idx) => {
-            const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sight.address || sight.sight_name)}`;
+            const googleMapsUrl = getGoogleMapsUrl(sight);
             const hasPhoto = !!(sight.photo_url && sight.photo_url.trim());
 
             const photoHtml = hasPhoto ? `
@@ -165,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function openSightModal(sight) {
         if (!sight) return;
 
-        const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sight.address || sight.sight_name)}`;
+        const googleMapsUrl = getGoogleMapsUrl(sight);
         const hasPhoto = !!(sight.photo_url && sight.photo_url.trim());
 
         if (hasPhoto) {
